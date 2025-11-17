@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!--style-->
+  <style>
+  body {
+    background: #f7f8fa;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 2%;
+  }
+
+  h1 {
+    color: #444;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  hr {
+    border-top: 2px solid #eee;
+    width: 80%;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    background: #f9fcff;
+  }
+
+  .card b {
+    font-size: 1.2em;
+    color: #222;
+  }
+
+  .card hr {
+    border-top: 1px solid #ddd;
+  }
+
+  .submit_form {
+    text-align: center;
+    padding: 30px 25px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  .submit_form:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-default {
+    background-color: #007bff;
+    color: white;
+    border-radius: 25px;
+    padding: 8px 20px;
+    border: none;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btn-default:hover {
+    background-color: #0056b3;
+    color: #fff;
+  }
+
+  .btn-primary {
+    border-radius: 25px;
+    padding: 6px 16px;
+    background-color: #dc3545;
+    border: none;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btn-primary:hover {
+    background-color: #b02a37;
+  }
+
+  .alert {
+    border-radius: 12px;
+    margin-top: 15px;
+    font-size: 0.95em;
+  }
+
+  form input[type="text"],
+  form textarea,
+  form select {
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    transition: border 0.3s;
+  }
+
+  form input[type="text"]:focus,
+  form textarea:focus,
+  form select:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+</style>
+
+
+</head>
+
+<body  class="container-fluid">
+
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-info">
+    <strong>{{message}}</strong>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <center class="row">
+    <h1>TODO LIST</h1>
+    <hr />
+  </center>
+
+  <div class="row">
+
+    <div class="col-md-8">
+
+      {% for i in list %}
+      <div class="card">
+        <center><b>{{i.title}}</b></center>
+        <hr/>
+        {{i.date}}
+        <hr/>
+        {{i.details}}
+        <br />
+        <br />
+        <form action="/del/{{i.id}}" method="POST" style=" padding-right: 4%; padding-bottom: 3%;">
+          {% csrf_token %}
+          <button value="remove" type="submit"  class="btn btn-primary" style="float: right;"><span class="glyphicon glyphicon-trash"></span> &nbsp; remove</button>
+        </form>
+      </div>
+      {% endfor%}
+    </div>
+    <div class="col-md-1"> </div>
+    <div class="col-md-3" >
+      <div  class="submit_form">
+      <form  method="POST">
+        {% csrf_token %}
+        {{forms}}
+        <center>
+        <input type="submit" class="btn btn-default" value="submit" />
+      </center>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
